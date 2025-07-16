@@ -2,13 +2,16 @@ import express from 'express';
 import cors from 'cors'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
+import { initMongoConnection } from './db/initMongoConnection.js';
 import { getAllContacts, getContactById } from './services/contacts.js';
 
+dotenv.config();
 
 export function setupServer() {
 const app = express();
 const logger = pino();
 
+await initMongoConnection();
 
 app.use(pinoHttp({ logger }))
   app.use(cors())
@@ -50,4 +53,4 @@ app.use((req, res) => {
     logger.info(`Server is running on port ${PORT}`)
   })}
 
-
+  setupServer();
