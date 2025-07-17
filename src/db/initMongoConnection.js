@@ -12,10 +12,7 @@ export async function initMongoConnection() {
 
   
     try {
-      await mongoose.connect(url, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
+      await mongoose.connect(url)
       console.log('Mongo connection successfully established!')
     } catch (err) {
       console.error('Mongo connection failed:', err)

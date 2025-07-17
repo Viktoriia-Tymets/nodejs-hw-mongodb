@@ -50,10 +50,10 @@ app.get('/contacts/:contactId', async (req, res) => {
 app.use((req, res) => {
     res.status(404).json({ status: 404, message: 'Contact not found' });
   });
-
+}
   setupServer().catch((err) => {
     console.error('❌ Failed to start server:', err);
     process.exit(1);
-  })}
+  })
 
-  setupServer();
+
