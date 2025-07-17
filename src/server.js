@@ -10,7 +10,6 @@ import { getAllContacts, getContactById } from './services/contacts.js';
 dotenv.config();
 
 async function setupServer() {
-console.log('mongodb connected')
 
 const app = express();
 const logger = pino();
