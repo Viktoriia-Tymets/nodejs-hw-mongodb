@@ -2,12 +2,16 @@ import express from 'express';
 import cors from 'cors'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
+import dotenv from 'dotenv';
 import { initMongoConnection } from './db/initMongoConnection.js';
 import { getAllContacts, getContactById } from './services/contacts.js';
 
+
 dotenv.config();
 
-export function setupServer() {
+async function setupServer() {
+console.log('mongodb connected')
+
 const app = express();
 const logger = pino();
 
@@ -48,9 +52,9 @@ app.use((req, res) => {
     res.status(404).json({ status: 404, message: 'Contact not found' });
   });
 
-  const PORT = process.env.PORT || 3000
-  app.listen(PORT, () => {
-    logger.info(`Server is running on port ${PORT}`)
+  setupServer().catch((err) => {
+    console.error('❌ Failed to start server:', err);
+    process.exit(1);
   })}
 
   setupServer();
