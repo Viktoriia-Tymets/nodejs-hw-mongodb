@@ -12,7 +12,6 @@ export async function handleGetAllContacts(req, res) {
 }
 
 export async function handleGetAllContactsById(req, res, next) {
-try{
     const {contactId} = req.params;
     const contact = await getContactById(contactId);
 
@@ -25,9 +24,6 @@ try{
         message: `Successfully found contact ${contactId}`,
         data: contact,
     });
-} catch (error) {
-    next(error)
-}
 }
 
 export async function handleCreateContact(req, res) {
@@ -41,9 +37,10 @@ export async function handleCreateContact(req, res) {
 }
 
 export async function handleUpdateContact(req, res) {
-    const result = await updateContact(req.params.id, req.body);
+    const { contactId } = req.params;
+    const result = await updateContact(contactId, req.body);
 
-    if(result === null) {
+    if(!result) {
         throw createError(404, 'Contact not found');
     }
 
@@ -55,9 +52,10 @@ export async function handleUpdateContact(req, res) {
 }
 
 export async function handleDeleteContact(req, res) {
-    const result = await deleteContact(req.params.id);
+    const { contactId } = req.params;
+    const result = await deleteContact(contactId);
 
-    if(result === null) {
+    if(!result) {
         throw createError(404, 'Contact not found');
     }
 
