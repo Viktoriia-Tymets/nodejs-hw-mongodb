@@ -16,3 +16,7 @@ export async function createContact(payload) {
 export async function updateContact(contactId, payload) {
     return Contact.findByIdAndUpdate(contactId, payload, {new: true})
 }
+
+export async function deleteContact(contactId) {
+    return Contact.findByIdAndDelete(contactId);
+}

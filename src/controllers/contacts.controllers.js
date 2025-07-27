@@ -1,4 +1,4 @@
-import { getAllContacts, getContactById, createContact, updateContact, deleteContact } from "../services/contacts";
+import { getAllContacts, getContactById, createContact, updateContact, deleteContact } from "../services/contacts.js";
 import createError from 'http-errors';
 
 export async function handleGetAllContacts(req, res) {
