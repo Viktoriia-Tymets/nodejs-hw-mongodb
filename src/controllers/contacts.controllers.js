@@ -44,7 +44,7 @@ export async function handleUpdateContact(req, res) {
     const result = await updateContact(req.params.id, req.body);
 
     if(result === null) {
-        throw new createError.NotFound(404, 'Contact not found');
+        throw createError(404, 'Contact not found');
     }
 
     res.json({
@@ -58,11 +58,9 @@ export async function handleDeleteContact(req, res) {
     const result = await deleteContact(req.params.id);
 
     if(result === null) {
-        throw new createError.NotFound(404, 'Contact not found');
+        throw createError(404, 'Contact not found');
     }
 
-    res.json({
-        status:204
-    })
+    res.status(204).send();
     
 }

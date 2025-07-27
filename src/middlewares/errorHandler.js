@@ -3,8 +3,8 @@ import {isHttpError} from 'http-errors';
 export function errorHandler (error, req, res, next) {
     if (isHttpError(error) === true) {
         return res 
-        .status(error.statusCode)
-        .json({status: error.statusCode, message: error.message });
+        .status(error.status)
+        .json({status: error.status, message: error.message });
     }
 
     console.log(error);

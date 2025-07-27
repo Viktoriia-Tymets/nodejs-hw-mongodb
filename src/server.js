@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 import { initMongoConnection } from './db/initMongoConnection.js';
 import contactsRouter from './routers/contacts.js';
 import createError from 'http-errors';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 
 dotenv.config();
@@ -23,16 +25,8 @@ app.use(pinoHttp({ logger }))
 
   app.use('/contacts', contactsRouter);
 
-  app.use((req, res, next) => {
-    next(createError(404, 'Route not found'));
-  });
-  app.use((err, req, res, next) => {
-    const status = err.status || 500;
-    res.status(status).json({
-      status,
-      message: err.message || 'Internal Server Error',
-    });
-  });
+  app.use(notFoundHandler);
+  app.use(errorHandler);
 
 
 const PORT = process.env.PORT || 3000;
