@@ -5,7 +5,6 @@ import pinoHttp from 'pino-http'
 import dotenv from 'dotenv';
 import { initMongoConnection } from './db/initMongoConnection.js';
 import contactsRouter from './routers/contacts.js';
-import createError from 'http-errors';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
