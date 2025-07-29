@@ -2,7 +2,11 @@ import { getAllContacts, getContactById, createContact, updateContact, deleteCon
 import createError from 'http-errors';
 
 export async function handleGetAllContacts(req, res) {
-    const contacts = await getAllContacts();
+    const page = parseInt(req.query.page) || 1;
+    const perPage =parseInt(req.query.perPage) || 10;
+    const sortBy = req.query.sortBy || "name";
+  const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
+    const contacts = await getAllContacts(page, perPage, sortBy, sortOrder);
     res.json({
         status: 200,
         message: 'Successfully found contacts!',
