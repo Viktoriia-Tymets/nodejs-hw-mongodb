@@ -8,7 +8,7 @@ import {
     handleDeleteContact
 
 } from '../controllers/contacts.controllers.js'
-import { isValidId } from '../middlewares/isValidId.js';
+import isValidId from '../middlewares/isValidId.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { contactsSchema, updateContactSchema } from '../validation/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
