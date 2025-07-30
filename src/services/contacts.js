@@ -1,15 +1,22 @@
 import { Contact } from "../models/contacts.js";
 
-export async function getAllContacts({page = 1, perPage = 10, sortBy = 'name', sortOrder = 'asc'}) {
-    const totalItems = await Contact.countDocuments();
-    const totalPages = Math.ceil(totalItems / perPage);
-    const skip = (page - 1) * perPage;
-    const sort = { [sortBy]: sortOrder === "desc" ? -1 : 1 }
+export async function getAllContacts({ page, perPage, sortBy, sortOrder }) {
+    console.log('getAllContacts params:', { page, perPage, sortBy, sortOrder });
   
-    const contacts = await Contact.find()
-    .sort(sort)
-      .skip(skip)
-      .limit(perPage);
+    const skip = (page - 1) * perPage;
+    const sortDirection = sortOrder === 'desc' ? -1 : 1;
+  
+    const [contacts, totalItems] = await Promise.all([
+      Contact.find()
+        .sort({ [sortBy]: sortDirection })
+        .skip(skip)
+        .limit(perPage),
+      Contact.countDocuments(),
+    ]);
+  
+    console.log('contacts.length:', contacts.length);
+  
+    const totalPages = Math.ceil(totalItems / perPage);
   
     return {
       data: contacts,

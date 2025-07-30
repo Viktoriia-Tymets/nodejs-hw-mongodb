@@ -1,19 +1,26 @@
 import { getAllContacts, getContactById, createContact, updateContact, deleteContact } from "../services/contacts.js";
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
 import createError from 'http-errors';
 
-export async function handleGetAllContacts(req, res) {
-    const page = parseInt(req.query.page) || 1;
-    const perPage =parseInt(req.query.perPage) || 10;
-    const sortBy = req.query.sortBy || "name";
-  const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
-    const contacts = await getAllContacts(page, perPage, sortBy, sortOrder);
-    res.json({
+export async function handleGetAllContacts(req, res, next) {
+    try {
+      const { page, perPage } = parsePaginationParams(req.query);
+      const { sortBy, sortOrder } = parseSortParams(req.query);
+  
+      console.log('handleGetAllContacts params:', { page, perPage, sortBy, sortOrder });
+  
+      const contacts = await getAllContacts({ page, perPage, sortBy, sortOrder });
+  
+      res.json({
         status: 200,
         message: 'Successfully found contacts!',
         data: contacts,
-    });
-    
-}
+      });
+    } catch (error) {
+      next(createError(500, error.message));
+    }
+  }
 
 export async function handleGetAllContactsById(req, res, next) {
     const {contactId} = req.params;
