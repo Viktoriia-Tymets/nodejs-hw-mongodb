@@ -10,7 +10,7 @@ export async function handleGetAllContacts(req, res, next) {
   
       console.log('handleGetAllContacts params:', { page, perPage, sortBy, sortOrder });
   
-      const contacts = await getAllContacts({ page, perPage, sortBy, sortOrder });
+      const contacts = await getAllContacts(req.user._id, { page, perPage, sortBy, sortOrder });
   
       res.json({
         status: 200,
@@ -24,7 +24,7 @@ export async function handleGetAllContacts(req, res, next) {
 
 export async function handleGetAllContactsById(req, res, next) {
     const {contactId} = req.params;
-    const contact = await getContactById(contactId);
+    const contact = await getContactById(contactId, req.user._id);
 
     if (!contact) {
         throw createError(404, 'Contact not found');
@@ -38,7 +38,7 @@ export async function handleGetAllContactsById(req, res, next) {
 }
 
 export async function handleCreateContact(req, res) {
-    const contact = await createContact(req.body);
+    const contact = await createContact(req.body, req.user._id);
     res.status(201).json({
         status: 201,
         message: 'Successfully created a contact!',
@@ -49,7 +49,7 @@ export async function handleCreateContact(req, res) {
 
 export async function handleUpdateContact(req, res) {
     const { contactId } = req.params;
-    const result = await updateContact(contactId, req.body);
+    const result = await updateContact(contactId, req.body, req.user._id);
 
     if(!result) {
         throw createError(404, 'Contact not found');
@@ -64,7 +64,7 @@ export async function handleUpdateContact(req, res) {
 
 export async function handleDeleteContact(req, res) {
     const { contactId } = req.params;
-    const result = await deleteContact(contactId);
+    const result = await deleteContact(contactId, req.user._id);
 
     if(!result) {
         throw createError(404, 'Contact not found');

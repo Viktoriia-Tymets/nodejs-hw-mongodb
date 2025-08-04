@@ -1,4 +1,5 @@
 import express from 'express';
+import { authenticate } from '../middlewares/authenticate.js';
 
 import {
     handleGetAllContacts,
@@ -13,6 +14,7 @@ import { validateBody } from '../middlewares/validateBody.js';
 import { contactsSchema, updateContactSchema } from '../validation/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 const router = express.Router();
+router.use(authenticate);
 
 router.get('/', ctrlWrapper(handleGetAllContacts));
 router.get('/:contactId', isValidId, ctrlWrapper(handleGetAllContactsById));
