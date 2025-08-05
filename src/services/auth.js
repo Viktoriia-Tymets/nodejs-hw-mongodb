@@ -22,13 +22,13 @@ export async function registerUser(payload) {
     const user = await User.findOne({ email });
   
     if (user === null) {
-      throw createHttpError.Unauthorized('Email or password is incorrect');
+      throw createHttpError(401, 'Email or password is incorrect');
     }
   
     const isMatch = await bcrypt.compare(password, user.password);
   
     if (isMatch !== true) {
-      throw createHttpError.Unauthorized('Email or password is incorrect');
+      throw createHttpError(401, 'Email or password is incorrect');
     }
   
     await Session.deleteOne({ userId: user._id });

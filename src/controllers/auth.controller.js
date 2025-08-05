@@ -2,7 +2,7 @@ import { registerUser, loginUser, refreshSession, logoutUser } from "../services
 
 export async function registerController(req, res) {
     const user = await registerUser(req.body);
-    const { password, ...userWithoutPassword } = user.toObject();
+    const {password, ...userWithoutPassword } = user.toObject();
   
     res.json({
       status: 201,

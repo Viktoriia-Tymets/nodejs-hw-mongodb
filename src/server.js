@@ -24,7 +24,7 @@ app.use(pinoHttp({ logger }))
   app.use(express.json())
 
   app.use('/contacts', contactsRouter);
-  app.use('/users', userRouter);
+  app.use('/auth', userRouter);
   app.use(notFoundHandler);
   app.use(errorHandler);
 
