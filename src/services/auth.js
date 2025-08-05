@@ -2,14 +2,14 @@ import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
 
-import { User } from '../models/users';
-import { Session } from '../models/session';
+import { User } from '../models/user.js';
+import { Session } from '../models/session.js';
 
 export async function registerUser(payload) {
     const user = await User.findOne({ email: payload.email });
   
     if (user !== null) {
-      throw new createHttpError(409, 'Email in use');
+      throw createHttpError(409, 'Email in use');
     }
   
     payload.password = await bcrypt.hash(payload.password, 10);
@@ -22,13 +22,13 @@ export async function registerUser(payload) {
     const user = await User.findOne({ email });
   
     if (user === null) {
-      throw new createHttpError.Unauthorized('Email or password is incorrect');
+      throw createHttpError.Unauthorized('Email or password is incorrect');
     }
   
     const isMatch = await bcrypt.compare(password, user.password);
   
     if (isMatch !== true) {
-      throw new createHttpError.Unauthorized('Email or password is incorrect');
+      throw createHttpError.Unauthorized('Email or password is incorrect');
     }
   
     await Session.deleteOne({ userId: user._id });
@@ -46,15 +46,15 @@ export async function registerUser(payload) {
     const session = await Session.findById(sessionId);
   
     if (session === null) {
-      throw new createHttpError.Unauthorized('Session not found');
+      throw createHttpError.Unauthorized('Session not found');
     }
   
     if (session.refreshToken !== refreshToken) {
-      throw new createHttpError.Unauthorized('Refresh token is invalid');
+      throw createHttpError.Unauthorized('Refresh token is invalid');
     }
   
     if (session.refreshTokenValidUntil < new Date()) {
-      throw new createHttpError.Unauthorized('Refresh token is expired');
+      throw createHttpError.Unauthorized('Refresh token is expired');
     }
   
     await Session.deleteOne({ _id: session._id });

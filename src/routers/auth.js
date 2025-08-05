@@ -1,7 +1,7 @@
 import express from 'express';
 
-import { registerController, loginController, refreshController, logoutController } from '../controllers/auth.controller';
-import { validateBody } from '../middlewares/validateBody';
+import { registerController, loginController, refreshController, logoutController } from '../controllers/auth.controller.js';
+import { validateBody } from '../middlewares/validateBody.js';
 
 import {
     registerSchema,

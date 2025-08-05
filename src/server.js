@@ -7,6 +7,7 @@ import { initMongoConnection } from './db/initMongoConnection.js';
 import contactsRouter from './routers/contacts.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import userRouter from "./routers/auth.js";
 
 
 dotenv.config();
@@ -23,7 +24,7 @@ app.use(pinoHttp({ logger }))
   app.use(express.json())
 
   app.use('/contacts', contactsRouter);
-
+  app.use('/users', userRouter);
   app.use(notFoundHandler);
   app.use(errorHandler);
 
