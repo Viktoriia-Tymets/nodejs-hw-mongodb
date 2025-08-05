@@ -12,15 +12,9 @@ import {
 
 const router = express.Router();
 
-router.post(
-    '/register',
-    validateBody(registerSchema),
-    ctrlWrapper(registerController),
-  );
-
-  router.post('/login', validateBody(loginSchema), ctrlWrapper(loginController));
-
-  router.post('/refresh', ctrlWrapper(refreshController));
-  router.post('/logout', ctrlWrapper(logoutController));
+router.post('/register', validateBody(registerSchema), ctrlWrapper(registerController));
+router.post('/login', validateBody(loginSchema), ctrlWrapper(loginController));
+router.post('/refresh', ctrlWrapper(refreshController));
+router.post('/logout', ctrlWrapper(logoutController));
 
 export default router;
