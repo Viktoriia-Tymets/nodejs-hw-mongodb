@@ -9,13 +9,12 @@ import {
   } from '../validation/auth.js';
 
   import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { authenticate } from '../middlewares/authenticate.js';
 
 const router = express.Router();
 
 router.post('/register', validateBody(registerSchema), ctrlWrapper(registerController));
 router.post('/login', validateBody(loginSchema), ctrlWrapper(loginController));
-router.post('/refresh', authenticate, ctrlWrapper(refreshController));
-router.post('/logout', authenticate, ctrlWrapper(logoutController));
+router.post('/refresh', ctrlWrapper(refreshController));
+router.post('/logout', ctrlWrapper(logoutController));
 
 export default router;

@@ -1,4 +1,5 @@
 import { registerUser, loginUser, refreshSession, logoutUser } from "../services/auth.js";
+import createHttpError from 'http-errors';
 
 export async function registerController(req, res) {
     const user = await registerUser(req.body);
@@ -36,8 +37,9 @@ export async function registerController(req, res) {
 
   export async function refreshController(req, res) {
     const { sessionId, refreshToken } = req.cookies;
-    console.log("refresh sessionId:", sessionId);
-console.log("refresh token:", refreshToken);
+    if (!sessionId || !refreshToken) {
+        throw createHttpError(401, 'No session or refresh token');
+      }
   
     const session = await refreshSession(sessionId, refreshToken);
   
@@ -63,11 +65,11 @@ console.log("refresh token:", refreshToken);
 
   export async function logoutController(req, res) {
     const { sessionId } = req.cookies;
-    console.log('sessionId from cookies:', sessionId);
-  
-    if (typeof sessionId !== 'undefined') {
+
+    if (!sessionId) {
+        throw createHttpError(401, 'No session to logout');
+      }
       await logoutUser(sessionId);
-    }
   
     res.clearCookie('sessionId');
     res.clearCookie('refreshToken');
