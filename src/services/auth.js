@@ -69,5 +69,10 @@ export async function registerUser(payload) {
   }
 
   export async function logoutUser(sessionId) {
-    await Session.deleteOne({ _id: sessionId });
+    const session = await Session.findByIdAndDelete(sessionId);
+    if (!session) {
+      console.warn(`Session ${sessionId} not found`);
+    } else {
+      console.log(`Session ${sessionId} deleted`);
+    }
   }

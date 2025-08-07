@@ -4,11 +4,10 @@ export async function registerController(req, res) {
     const user = await registerUser(req.body);
     const {password, ...userWithoutPassword } = user.toObject();
   
-    res.json({
-      status: 201,
-      message: "Successfully registered a user!",
-      data: userWithoutPassword,
-    });
+    res.status(201).json({
+        message: "Successfully registered a user!",
+        data: userWithoutPassword,
+      });
   }
 
 
@@ -37,6 +36,8 @@ export async function registerController(req, res) {
 
   export async function refreshController(req, res) {
     const { sessionId, refreshToken } = req.cookies;
+    console.log("refresh sessionId:", sessionId);
+console.log("refresh token:", refreshToken);
   
     const session = await refreshSession(sessionId, refreshToken);
   
@@ -62,6 +63,7 @@ export async function registerController(req, res) {
 
   export async function logoutController(req, res) {
     const { sessionId } = req.cookies;
+    console.log('sessionId from cookies:', sessionId);
   
     if (typeof sessionId !== 'undefined') {
       await logoutUser(sessionId);

@@ -19,8 +19,9 @@ export async function authenticate(req, res, next) {
       }
   
       const session = await Session.findOne({ accessToken });
-  
+
       if (!session) {
+        console.warn("AccessToken not found in DB");
         throw createHttpError(401, 'Session not found');
       }
   
