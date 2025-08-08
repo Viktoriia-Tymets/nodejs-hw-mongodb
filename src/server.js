@@ -3,6 +3,7 @@ import cors from 'cors'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import { initMongoConnection } from './db/initMongoConnection.js';
 import contactsRouter from './routers/contacts.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -22,6 +23,7 @@ await initMongoConnection();
 app.use(pinoHttp({ logger }))
   app.use(cors())
   app.use(express.json())
+  app.use(cookieParser());
 
   app.use('/contacts', contactsRouter);
   app.use('/auth', userRouter);
