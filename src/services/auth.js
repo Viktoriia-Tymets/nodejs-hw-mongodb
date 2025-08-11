@@ -1,9 +1,14 @@
 import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
+import jwt from "jsonwebtoken";
 
 import { User } from '../models/user.js';
 import { Session } from '../models/session.js';
+import sendEmail from '../utils/sendMail.js'
+
+const JWT_SECRET = process.env.JWT_SECRET;
+const APP_DOMAIN = process.env.APP_DOMAIN;
 
 export async function registerUser(payload) {
     const user = await User.findOne({ email: payload.email });
@@ -75,4 +80,56 @@ export async function registerUser(payload) {
     } else {
       console.log(`Session ${sessionId} deleted`);
     }
+  }
+  export async function requestPasswordReset(email) {
+    const user = await User.findOne({ email });
+  
+    if (!user) {
+      throw createHttpError(404, 'User not found!');
+    }
+  
+    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '5m' });
+  
+    const resetLink = `${APP_DOMAIN}/reset-password?token=${token}`;
+  
+    const subject = 'Reset your password';
+    const html = `
+      <p>You requested a password reset.</p>
+      <p>Click the link below to reset your password:</p>
+      <a href="${resetLink}">${resetLink}</a>
+      <p>This link will expire in 5 minutes.</p>
+    `;
+  
+    try {
+      await sendEmail({
+        to: email,
+        subject,
+        html
+      });
+    } catch (error) {
+      throw createHttpError(500, 'Failed to send the email, please try again later.');
+    }
+  }
+  
+
+  export async function resetPassword(token, newPassword) {
+    let email;
+  
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      email = decoded.email;
+    } catch (eror) {
+      throw createHttpError(401, "Token is expired or invalid.");
+    }
+  
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw createHttpError(404, "User not found!");
+    }
+  
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+  
+    await Session.deleteMany({ userId: user._id });
   }
