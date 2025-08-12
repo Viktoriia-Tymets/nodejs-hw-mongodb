@@ -1,8 +1,8 @@
-import cloudinary from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
 
 import { getEnvVariable } from './getEnvVariable.js';
 
-cloudinary.v2.config({
+cloudinary.config({
   cloud_name: getEnvVariable('CLOUDINARY_CLOUD_NAME'),
   api_key: getEnvVariable('CLOUDINARY_API_KEY'),
   api_secret: getEnvVariable('CLOUDINARY_API_SECRET'),

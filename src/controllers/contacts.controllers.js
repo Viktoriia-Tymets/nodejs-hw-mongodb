@@ -1,4 +1,4 @@
-import * as fs from 'node:fs/promises';
+import fs from 'fs/promises';
 import path from 'node:path';
 
 import { getAllContacts, getContactById, createContact, updateContact, deleteContact } from "../services/contacts.js";
@@ -77,6 +77,7 @@ export async function handleCreateContact(req, res, next) {
 }
 
 export async function handleUpdateContact(req, res, next) {
+  try{
     const { contactId } = req.params;
     const updates = { ...req.body };
 
@@ -107,6 +108,7 @@ export async function handleUpdateContact(req, res, next) {
     })
    } catch (err) {
   next(err);
+}
 }
 
 

@@ -9,6 +9,7 @@ import contactsRouter from './routers/contacts.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import userRouter from "./routers/auth.js";
+import { getEnvVariable } from './utils/getEnvVariable.js';
 
 
 dotenv.config();
@@ -31,7 +32,7 @@ app.use(pinoHttp({ logger }))
   app.use(errorHandler);
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = getEnvVariable('PORT') || 3000;
   app.listen(PORT, () => {
     logger.info(`🚀 Server is running on port ${PORT}`);
   });
