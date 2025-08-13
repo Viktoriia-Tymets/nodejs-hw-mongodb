@@ -1,4 +1,5 @@
 import express from 'express';
+import multer from 'multer';
 import { authenticate } from '../middlewares/authenticate.js';
 import { uploadFile } from '../middlewares/uploadFile.js';
 
