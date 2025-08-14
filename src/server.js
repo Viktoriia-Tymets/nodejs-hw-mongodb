@@ -25,6 +25,7 @@ app.use(pinoHttp({ logger }))
   app.use(cors())
   app.use(express.json())
   app.use(cookieParser());
+  app.use('/avatars', express.static('src/uploads/avatars'));
 
   app.use('/contacts', contactsRouter);
   app.use('/auth', userRouter);
