@@ -1,0 +1,25 @@
+post:
+  tags:
+    - Contacts
+  summary: Create a new contact
+  operationId: createContact
+  description: Add a new contact to the book
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/NewContact.yaml#/NewContact'
+  responses:
+    '201':
+      description: Contact created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/Contact.yaml#/Contact'
+    '400':
+      description: Invalid request body
+    '401':
+      description: Unauthorized

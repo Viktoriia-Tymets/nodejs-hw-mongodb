@@ -1,3 +1,7 @@
+import swaggerUi from 'swagger-ui-express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import YAML from 'yamljs';
 import express from 'express';
 import cors from 'cors'
 import pino from 'pino'
@@ -18,6 +22,10 @@ async function setupServer() {
 
 const app = express();
 const logger = pino();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const swaggerDocument = YAML.load(path.join(__dirname, '../docs/openapi.yaml'));
+
 
 await initMongoConnection();
 
@@ -29,8 +37,12 @@ app.use(pinoHttp({ logger }))
 
   app.use('/contacts', contactsRouter);
   app.use('/auth', userRouter);
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use(notFoundHandler);
   app.use(errorHandler);
+  
+
+
 
 
 const PORT = getEnvVariable('PORT') || 3000;
