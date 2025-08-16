@@ -1,0 +1,47 @@
+Contact:
+  type: object
+  properties:
+    _id:
+      type: string
+      format: uuid
+      example: "64e3bba632b6b3c3a1f2d70a"
+    name:
+      type: string
+      example: "John Doe"
+    phoneNumber:
+      type: string
+      example: "+98456732009"
+    email:
+      type: string
+      format: email
+      example: "liam@gmail.com"
+    isFavourite:
+      type: boolean
+      example: false
+    contactType:
+      type: string
+      enum:
+        - work
+        - home
+        - personal
+      example: "personal"
+    userId:
+      type: string
+      format: uuid
+      example: "95e3bba908b6j1k3a1f3a93e"
+    photo:
+      type: string
+      description: Contact photo
+    createdAt:
+      type: string
+      format: date-time
+      example: "2025-08-16T13:35:09Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2025-08-16T13:37:15Z"
+  required:
+    - name
+    - phoneNumber
+    - contactType
+    - userId

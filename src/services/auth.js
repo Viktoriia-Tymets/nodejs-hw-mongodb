@@ -118,7 +118,7 @@ export async function registerUser(payload) {
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
       email = decoded.email;
-    } catch (eror) {
+    } catch (error) {
       throw createHttpError(401, "Token is expired or invalid.");
     }
   
