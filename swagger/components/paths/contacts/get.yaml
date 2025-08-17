@@ -21,7 +21,7 @@ responses:
         schema:
           type: array
           items:
-            $ref: '#/components/schemas/Contact'
+            $ref: '/swagger/components/schemas/Contact'
   '404':
     description: Contacts not found
     content:

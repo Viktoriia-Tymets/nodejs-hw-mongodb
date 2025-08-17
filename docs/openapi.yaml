@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
   version: 1.0.0
   title: Contact book
@@ -10,26 +10,19 @@ servers:
   - url: https://nodejs-hw-mongodb-7-wywt.onrender.com
   - url: http://127.0.0.1:8080
 paths:
-  /contacts/{id}:
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-        description: Contact ID
+  /contacts/{contactId}:
     get:
-      $ref: './docs/swagger/paths/contacts/{id}/get.yaml'
+      $ref: ../swagger/paths/contacts/{contactId}/get.yaml
     patch:
-      $ref: './docs/swagger/paths/contacts/{id}/patch.yaml'
+      $ref: ../swagger/paths/contacts/{contactId}/patch.yaml
     delete:
-      $ref: './docs/swagger/paths/contacts/{id}/delete.yaml'
+      $ref: ../swagger/paths/contacts/{contactId}/delete.yaml
 
   /contacts:
     get:
-      $ref: './docs/swagger/paths/contacts/get.yaml'
+      $ref: ../swagger/paths/contacts/get.yaml
     post:
-      $ref: './docs/swagger/paths/contacts/post.yaml'
+      $ref: ../swagger/paths/contacts/post.yaml
 
 components:
   securitySchemes:

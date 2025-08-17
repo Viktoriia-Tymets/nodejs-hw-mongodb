@@ -6,7 +6,7 @@ description: Update contact by Id
 security:
   - bearerAuth: []
 parameters:
-  - name: id
+  - name: contactId
     in: path
     required: true
     schema:
@@ -15,16 +15,16 @@ parameters:
 requestBody:
   required: true
   content:
-    application/json:
+    multipart/form-data:
       schema:
-        $ref: '#/components/schemas/UpdateContact'
+        $ref: '/swagger/components/schemas/UpdateContact'
 responses:
   '200':
     description: Contact updated successfully
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/Contact'
+          $ref: '/swagger/components/schemas/Contact'
   '400':
     description: Invalid data
   '404':

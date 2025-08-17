@@ -1,31 +1,24 @@
 tags:
   - Contacts
-summary: Delete a contact
-operationId: deleteContact
-description: Delete a contact by Id
+summary: Get contact by ID
+operationId: getContactById
+description: Retrieve detailed information about a specific contact by its unique ID.
 security:
   - bearerAuth: []
 parameters:
-  - name: id
+  - name: contactId
     in: path
     required: true
+    description: ID of the contact to retrieve
     schema:
       type: string
-    description: ID of the contact to delete
 responses:
   '200':
-    description: Contact deleted successfully
+    description: Contact found successfully
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            status:
-              type: integer
-              example: 200
-            message:
-              type: string
-              example: Contact deleted successfully
+          $ref: '/swagger/components/schemas/Contact.yaml'
   '404':
     description: Contact not found
     content:
@@ -39,3 +32,4 @@ responses:
             message:
               type: string
               example: Contact not found
+
