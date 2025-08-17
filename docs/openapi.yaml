@@ -21,11 +21,12 @@ paths:
     delete:
       $ref: ../swagger/paths/contacts/{id}/delete.yaml
 
-      /contacts:
+  /contacts:
     get:
       $ref: ../swagger/paths/contacts/get.yaml
     post:
       $ref: ../swagger/paths/contacts/post.yaml
+
 
 components:
   securitySchemes:
