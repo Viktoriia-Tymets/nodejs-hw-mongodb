@@ -8,6 +8,7 @@ tags:
     description: Operation with contacts
 servers:
   - url: https://nodejs-hw-mongodb-7-wywt.onrender.com
+  - url: http://127.0.0.1:8080
 paths:
   /contacts/{id}:
     parameters:
@@ -18,17 +19,17 @@ paths:
           type: string
         description: Contact ID
     get:
-      $ref: '/docs/swagger/paths/contacts/{id}/get.yaml'
+      $ref: './docs/swagger/paths/contacts/{id}/get.yaml'
     patch:
-      $ref: '/docs/swagger/paths/contacts/{id}/patch.yaml'
+      $ref: './docs/swagger/paths/contacts/{id}/patch.yaml'
     delete:
-      $ref: '/docs/swagger/paths/contacts/{id}/delete.yaml'
+      $ref: './docs/swagger/paths/contacts/{id}/delete.yaml'
 
   /contacts:
     get:
-      $ref: '/docs/swagger/paths/contacts/get.yaml'
+      $ref: './docs/swagger/paths/contacts/get.yaml'
     post:
-      $ref: '/docs/swagger/paths/contacts/post.yaml'
+      $ref: './docs/swagger/paths/contacts/post.yaml'
 
 components:
   securitySchemes:

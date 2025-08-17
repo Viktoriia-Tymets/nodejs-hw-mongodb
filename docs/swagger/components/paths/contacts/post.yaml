@@ -8,16 +8,16 @@ security:
 requestBody:
   required: true
   content:
-    application/json:
+    multipart/form-data:
       schema:
-        $ref: '#/components/schemas/NewContact'
+        $ref: '../../../components/schemas/Contact.yaml'
 responses:
   '200':
     description: Contact created successfully
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/Contact'
+          $ref: '../../../components/schemas/Contact.yaml'
   '400':
     description: Invalid request body
 
