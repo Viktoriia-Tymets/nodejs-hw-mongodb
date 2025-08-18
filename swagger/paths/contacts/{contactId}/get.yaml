@@ -14,11 +14,24 @@ parameters:
       type: string
 responses:
   '200':
-    description: Contact found successfully
+    description: Successfully found contact
     content:
       application/json:
         schema:
-          $ref: '/swagger/components/schemas/Contact.yaml'
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found contact with {contactId}
+            data:
+              $ref: '../../../components/schemas/Contact.yaml'
   '404':
     description: Contact not found
     content:
@@ -32,4 +45,5 @@ responses:
             message:
               type: string
               example: Contact not found
+
 

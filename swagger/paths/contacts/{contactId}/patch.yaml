@@ -17,17 +17,31 @@ requestBody:
   content:
     multipart/form-data:
       schema:
-        $ref: '/swagger/components/schemas/UpdateContact'
+        $ref: '../../../components/schemas/UpdateContact.yaml'
 responses:
   '200':
-    description: Contact updated successfully
+    description: Successfully updated a contact
     content:
       application/json:
         schema:
-          $ref: '/swagger/components/schemas/Contact'
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a contact!
+            data:
+              $ref: '../../../components/schemas/Contact.yaml'
   '400':
     description: Invalid data
   '404':
     description: Contact not found
+
 
 
