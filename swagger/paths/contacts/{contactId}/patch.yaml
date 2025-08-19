@@ -35,9 +35,6 @@ requestBody:
           contactType:
             type: string
             enum: [home, work, personal]
-        required:
-          - name
-          - email
 responses:
   '200':
     description: Successfully updated a contact
