@@ -38,6 +38,9 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - status
+            - message
           properties:
             status:
               type: integer
@@ -45,5 +48,6 @@ responses:
             message:
               type: string
               example: Contact not found
+
 
 

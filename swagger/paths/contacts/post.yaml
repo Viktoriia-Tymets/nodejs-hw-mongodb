@@ -10,8 +10,27 @@ requestBody:
   content:
     multipart/form-data:
       schema:
-        $ref: '../../components/schemas/Contact.yaml'
-
+        type: object
+        properties:
+          name:
+            type: string
+            example: Kate Lim
+          email:
+            type: string
+            format: email
+            example: kate678@gmail.com
+          phoneNumber:
+            type: string
+            example: "+380935209360"
+          isFavourite:
+            type: boolean
+            example: true
+          contactType:
+            type: string
+            enum: [home, work, personal]
+        required:
+          - name
+          - email
 responses:
   '201':
     description: Successfully created a contact
@@ -34,6 +53,21 @@ responses:
               $ref: '../../components/schemas/Contact.yaml'
   '400':
     description: Invalid request body
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Invalid request body
+
 
 
 

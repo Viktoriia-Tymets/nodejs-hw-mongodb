@@ -9,15 +9,35 @@ parameters:
   - name: contactId
     in: path
     required: true
+    description: ID of the contact to update
     schema:
       type: string
-    description: ID of the contact to update
 requestBody:
   required: true
   content:
     multipart/form-data:
       schema:
-        $ref: '../../../components/schemas/UpdateContact.yaml'
+        type: object
+        properties:
+          name:
+            type: string
+            example: Lili Bon
+          email:
+            type: string
+            format: email
+            example: lilibon78@gmail.com
+          phoneNumber:
+            type: string
+            example: "+380936439567"
+          isFavourite:
+            type: boolean
+            example: true
+          contactType:
+            type: string
+            enum: [home, work, personal]
+        required:
+          - name
+          - email
 responses:
   '200':
     description: Successfully updated a contact
@@ -40,8 +60,33 @@ responses:
               $ref: '../../../components/schemas/Contact.yaml'
   '400':
     description: Invalid data
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Invalid request body
   '404':
     description: Contact not found
-
-
-
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Contact not found

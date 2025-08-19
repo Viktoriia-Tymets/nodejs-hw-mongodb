@@ -20,48 +20,37 @@ parameters:
     name: sortBy
     schema:
       type: string
-      description: List of contacts sort by
       enum: [name, isFavourite, contactType]
-      example: name
   - in: query
     name: sortOrder
     schema:
       type: string
-      description: List of contacts sort order
       enum: [asc, desc]
-      example: asc
   - in: query
     name: contactType
     schema:
       type: string
-      description: List of contacts filter by contactType
-      enum: [work, home, personal]
-      example: personal
+      enum: [home, work, personal]
   - in: query
     name: phoneNumber
     schema:
       type: string
-      description: List of contacts filter by phone number
-      example: '1234'
+      example: '123456789'
   - in: query
     name: name
     schema:
       type: string
-      description: List of contacts filter by name
-      example: 'Jon'
+      example: 'John'
   - in: query
     name: email
     schema:
       type: string
-      description: List of contacts filter by email
-      example: 'mail'
+      example: 'john@example.com'
   - in: query
     name: isFavourite
     schema:
       type: boolean
-      description: List of contacts filter by favourite
       example: true
-
 responses:
   '200':
     description: Successfully found contacts
@@ -82,8 +71,42 @@ responses:
               example: Successfully found contacts!
             data:
               type: object
-              items:
-                $ref: '../../components/schemas/Contact.yaml'
+              required:
+                - contacts
+                - page
+                - perPage
+                - totalPages
+                - totalContacts
+              properties:
+                contacts:
+                  type: array
+                  items:
+                    $ref: '../../components/schemas/Contact.yaml'
+                page:
+                  type: integer
+                  example: 1
+                perPage:
+                  type: integer
+                  example: 10
+                totalPages:
+                  type: integer
+                  example: 3
+                totalContacts:
+                  type: integer
+                  example: 30
+  '400':
+    description: Invalid query parameters
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Invalid query parameters
   '404':
     description: Contacts not found
     content:
@@ -91,11 +114,9 @@ responses:
         schema:
           type: object
           properties:
+            status:
+              type: integer
+              example: 404
             message:
               type: string
               example: Contacts not found
-
-
-
-
-

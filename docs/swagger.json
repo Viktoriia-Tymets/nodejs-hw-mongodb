@@ -79,6 +79,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -112,10 +116,10 @@
             "name": "contactId",
             "in": "path",
             "required": true,
+            "description": "ID of the contact to update",
             "schema": {
               "type": "string"
-            },
-            "description": "ID of the contact to update"
+            }
           }
         ],
         "requestBody": {
@@ -123,7 +127,38 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateContact"
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Lili Bon"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "lilibon78@gmail.com"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": "+380936439567"
+                  },
+                  "isFavourite": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "contactType": {
+                    "type": "string",
+                    "enum": [
+                      "home",
+                      "work",
+                      "personal"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "email"
+                ]
               }
             }
           }
@@ -158,10 +193,52 @@
             }
           },
           "400": {
-            "description": "Invalid data"
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid request body"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Contact not found"
+            "description": "Contact not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Contact not found"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -189,25 +266,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Contact deleted successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Contact deleted successfully"
-                    }
-                  }
-                }
-              }
-            }
+          "204": {
+            "description": "Contact deleted successfully"
           },
           "404": {
             "description": "Contact not found",
@@ -267,13 +327,11 @@
             "name": "sortBy",
             "schema": {
               "type": "string",
-              "description": "List of contacts sort by",
               "enum": [
                 "name",
                 "isFavourite",
                 "contactType"
-              ],
-              "example": "name"
+              ]
             }
           },
           {
@@ -281,12 +339,10 @@
             "name": "sortOrder",
             "schema": {
               "type": "string",
-              "description": "List of contacts sort order",
               "enum": [
                 "asc",
                 "desc"
-              ],
-              "example": "asc"
+              ]
             }
           },
           {
@@ -294,13 +350,11 @@
             "name": "contactType",
             "schema": {
               "type": "string",
-              "description": "List of contacts filter by contactType",
               "enum": [
-                "work",
                 "home",
+                "work",
                 "personal"
-              ],
-              "example": "personal"
+              ]
             }
           },
           {
@@ -308,8 +362,7 @@
             "name": "phoneNumber",
             "schema": {
               "type": "string",
-              "description": "List of contacts filter by phone number",
-              "example": "1234"
+              "example": "123456789"
             }
           },
           {
@@ -317,8 +370,7 @@
             "name": "name",
             "schema": {
               "type": "string",
-              "description": "List of contacts filter by name",
-              "example": "Jon"
+              "example": "John"
             }
           },
           {
@@ -326,8 +378,7 @@
             "name": "email",
             "schema": {
               "type": "string",
-              "description": "List of contacts filter by email",
-              "example": "mail"
+              "example": "john@example.com"
             }
           },
           {
@@ -335,7 +386,6 @@
             "name": "isFavourite",
             "schema": {
               "type": "boolean",
-              "description": "List of contacts filter by favourite",
               "example": true
             }
           }
@@ -363,9 +413,57 @@
                     },
                     "data": {
                       "type": "object",
-                      "items": {
-                        "$ref": "#/components/schemas/Contact"
+                      "required": [
+                        "contacts",
+                        "page",
+                        "perPage",
+                        "totalPages",
+                        "totalContacts"
+                      ],
+                      "properties": {
+                        "contacts": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Contact"
+                          }
+                        },
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "perPage": {
+                          "type": "integer",
+                          "example": 10
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "example": 3
+                        },
+                        "totalContacts": {
+                          "type": "integer",
+                          "example": 30
+                        }
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid query parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid query parameters"
                     }
                   }
                 }
@@ -379,6 +477,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
                     "message": {
                       "type": "string",
                       "example": "Contacts not found"
@@ -407,7 +509,38 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/Contact"
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Kate Lim"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "kate678@gmail.com"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": "+380935209360"
+                  },
+                  "isFavourite": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "contactType": {
+                    "type": "string",
+                    "enum": [
+                      "home",
+                      "work",
+                      "personal"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "email"
+                ]
               }
             }
           }
@@ -442,7 +575,28 @@
             }
           },
           "400": {
-            "description": "Invalid request body"
+            "description": "Invalid request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid request body"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -520,41 +674,6 @@
                 "contactType",
                 "userId"
               ]
-            }
-          }
-        }
-      },
-      "UpdateContact": {
-        "components": {
-          "schemas": {
-            "UpdateContact": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "phoneNumber": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string",
-                  "format": "email"
-                },
-                "isFavourite": {
-                  "type": "boolean"
-                },
-                "contactType": {
-                  "type": "string",
-                  "enum": [
-                    "work",
-                    "home",
-                    "personal"
-                  ]
-                },
-                "photo": {
-                  "type": "string"
-                }
-              }
             }
           }
         }
