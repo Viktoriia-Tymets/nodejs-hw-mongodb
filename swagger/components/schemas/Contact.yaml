@@ -1,6 +1,3 @@
-components:
-  schemas:
-    Contact:
       type: object
       properties:
         _id:

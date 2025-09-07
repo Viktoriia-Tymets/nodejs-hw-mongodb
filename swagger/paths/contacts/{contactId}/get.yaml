@@ -31,7 +31,7 @@ responses:
               type: string
               example: Successfully found contact with {contactId}
             data:
-              $ref: '#/components/schemas/Contact'
+              $ref: '../../../components/schemas/Contact.yaml'
   '404':
     description: Contact not found
     content:

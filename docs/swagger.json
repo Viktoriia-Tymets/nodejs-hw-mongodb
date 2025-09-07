@@ -153,6 +153,10 @@
                       "work",
                       "personal"
                     ]
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               }
@@ -487,6 +491,10 @@
                       "work",
                       "personal"
                     ]
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
                   }
                 },
                 "required": [

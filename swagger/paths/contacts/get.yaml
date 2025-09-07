@@ -56,7 +56,7 @@ responses:
                 contacts:
                   type: array
                   items:
-                    $ref: '#/components/schemas/Contact'
+                    $ref: '../../components/schemas/Contact.yaml'
                 page:
                   type: integer
                   example: 1
