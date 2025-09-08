@@ -53,7 +53,7 @@ responses:
               type: string
               example: Successfully created contact!
             data:
-              $ref: '../../components/schemas/Contact.yaml'
+              $ref: ../../components/schemas/Contact.yaml
   '400':
     description: Invalid request body
     content:
